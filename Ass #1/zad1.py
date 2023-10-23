@@ -1,7 +1,5 @@
 import sys
 
-# TODO: stestować
-
 def prime_factors(n):
     factors = {}
     divisor = 2
