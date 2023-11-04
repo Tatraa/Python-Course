@@ -20,4 +20,5 @@ def fun(N):
 
     return space
 
-print(fun(9))
+N = 10
+print(fun(N))
