@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 x_min = int(input("Wstaw x_min:"))
-x_max = int(input("Wstaw x_min:"))
+x_max = int(input("Wstaw x_max:"))
 
 x_val = np.linspace(x_min, x_max, 200)
 
@@ -20,3 +20,4 @@ plt.xlabel('x')
 plt.ylabel('F(x)')
 plt.grid()
 plt.show()
+plt.savefig('Chart.png')
