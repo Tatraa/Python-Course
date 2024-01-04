@@ -3,7 +3,9 @@ import tkinter as tk
 from PIL import Image
 
 okno = tk.Tk()
-# tytuł, geometria, nieskalowalne
+okno.title("Skalowanie zdjęć")
+okno.geometry("800x600")
+#okno.resizable(False, False)
 
 image_fp = None  
 data_image = None
@@ -72,23 +74,39 @@ def save_handler():
 				image.save(image_save_fp.name)
 
 
-# open_bnt = Button(... z open_handler)
-# width_label = Label(...
+open_btn = Button(okno, text="Open Image", command=open_handler)
+#open_btn.pack(side="left")
+open_btn.grid(column=0, row=0, padx=10)
+
+width_label = Label(okno, text="Width:")
+#width_label.pack(side="left")
+width_label.grid(column=1, row=0, padx=10)
 width_entry_str = StringVar()
-# width_entry = Entry(...
+width_entry = Entry(okno, textvariable=width_entry_str)
 width_entry.bind("<KeyRelease>", width_modified)
+#width_entry.pack(side="left")
+width_entry.grid(column=2, row=0, padx=10)
 
-# height_label = Label(...
+height_label = Label(okno, text="Height:")
+#height_label.pack(side="left")
+height_label.grid(column=3, row=0, padx=10)
 height_entry_str = StringVar()
-# height_entry = Entry(...
+height_entry = Entry(okno, textvariable=height_entry_str)
 height_entry.bind("<KeyRelease>", height_modified)
+#height_entry.pack(side="left")
+height_entry.grid(column=4, row=0, padx=10)
 
-# resize_btn = Button(... z resize_handler)
+resize_btn = Button(okno, text="Resize", command=resize_handler)
+#resize_btn.pack(side="left")
+resize_btn.grid(column=5, row=0, padx=10)
 
-# save_btn = Button(... z save_handler)
+save_btn = Button(okno, text="Save", command=save_handler)
+#save_btn.pack(side="left")
+save_btn.grid(column=6, row=0, padx=10)
 
 image_label = Label(okno)
-image_label.config(image="")
-image_label.pack(fill="both", padx=10, pady=50)
-
+# image_label.pack(fill="both", padx=10, pady=50)
+image_label.grid(column=0, row=1)
 okno.mainloop()
+
+

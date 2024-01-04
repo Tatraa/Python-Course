@@ -10,26 +10,11 @@ myFont = font.Font(family='Arial', size=20, weight='bold')
 ans_entry =  Entry(okno, bd=5, width=20, font=myFont, bg="gray", fg="white")
 ans_entry.grid(row=0, column=0, columnspan=4)
 
-
-# przykładowy pierwszy Button 
-btn_1 = Button(okno, text="1", padx=20, pady=10)
-btn_1['font'] = myFont
-btn_1.grid(row=1, column=0)
-
-btn_2 = Button(okno, text="2", padx=20, pady=10)
-btn_2['font'] = myFont
-btn_2.grid(row=1, column=1)
-
-btn_3 = Button(okno, text="3", padx=20, pady=10)
-btn_3['font'] = myFont
-btn_3.grid(row=1, column=2)
-
-
-
-# proponuje dopisywac do slownika trzy elementy:
-# num_1, num_2, oper wraz z wartościami
-equation = {} 
-
+equation = {
+    'num_1': '',
+    'num_2': '',
+    'oper': ''
+}
 
 def mouse_button_release(event):
     widg = event.widget
@@ -37,20 +22,66 @@ def mouse_button_release(event):
 
     if text in "0123456789":
         ans_entry.insert(len(ans_entry.get()), text)
+        if equation['oper'] == '':
+            equation['num_1'] += text
+        else:
+            equation['num_2'] += text
 
-    if text in "+-*/":
-        pass
+    elif text in "+-*/":
+        if equation['num_1'] != '':
+            equation['oper'] = text
+            ans_entry.insert(len(ans_entry.get()), text)
 
-    if text == "C":
-        pass
+    elif text == "C":
+        ans_entry.delete(0, tk.END)
+        equation['num_1'] = ''
+        equation['num_2'] = ''
+        equation['oper'] = ''
 
-    if text == "=":
-        # jakieś obliczenia
-        pass
+    elif text == "=":
+        if equation['num_1'] != '' and equation['num_2'] != '' and equation['oper'] != '':
+            result = 0
+            num1 = int(equation['num_1'])
+            num2 = int(equation['num_2'])
 
-        
+            if equation['oper'] == '+':
+                result = num1 + num2
+            elif equation['oper'] == '-':
+                result = num1 - num2
+            elif equation['oper'] == '*':
+                result = num1 * num2
+            elif equation['oper'] == '/':
+                if num2 != 0:
+                    result = num1 / num2
+                else:
+                    ans_entry.delete(0, tk.END)
+                    ans_entry.insert(0, "Error")
+                    return
 
-# sposób na reakcję 
+            ans_entry.delete(0, tk.END)
+            ans_entry.insert(0, str(result))
+            equation['num_1'] = str(result)
+            equation['num_2'] = ''
+            equation['oper'] = ''
+
+buttons = [
+    '7', '8', '9', '/',
+    '4', '5', '6', '*',
+    '1', '2', '3', '-',
+    '0', 'C', '=', '+'
+]
+
+row_val = 1
+col_val = 0
+for button in buttons:
+    btn = Button(okno, text=button, padx=20, pady=10)
+    btn['font'] = myFont
+    btn.grid(row=row_val, column=col_val)
+    col_val += 1
+    if col_val > 3:
+        col_val = 0
+        row_val += 1
+
 okno.bind("<ButtonRelease-1>", mouse_button_release)
 
 okno.mainloop()

@@ -3,3 +3,4 @@ matplotlib
 multipledispatch
 pygame
 tkcalendar
+PyPDF2

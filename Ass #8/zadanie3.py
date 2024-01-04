@@ -1,35 +1,32 @@
 import tkinter as tk
 from tkinter import Label, StringVar
 from datetime import datetime
-from tkcalendar import Calendar  # pip install tkcalendar
+from tkcalendar import Calendar
 
 okno = tk.Tk()
-# tytuł, rozmiar, blokada wielkości
+okno.title("Zegar i Kalendarz")
+okno.geometry("400x300")
+okno.resizable(False, False)
 
-# utwórz StringVar()
+date_time_var = StringVar()
 
 def update_date_time():
-	# dzien = i tak dalej... miesiac, rok, czas, dzien
-	# czytamy datetime.today().strftime('%A')
-	# kody https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
-	
-	# dt = dzien + ... + "\n" + ...
-	# ustaw za pomocą .set dt dla StringVar zrobinego powyżej
-	# ważne: rekurencyjne odświeżanie etykiety - patrz poniżej
-	date_time.after(1000, update_date_time)
+    now = datetime.now()
+    day = now.strftime('%d')
+    month = now.strftime('%B')
+    year = now.strftime('%Y')
+    time = now.strftime('%H:%M:%S')
+    day_of_week = now.strftime('%A')
 
-# widget Label ustawiony na StringVar zrobiony na początku, rozmiar, czcionki, tło - wg uznania 
-# date_time = Label(...
+    dt = f"{day_of_week}, {day} {month} {year}\n{time}"
+    date_time_var.set(dt)
+    date_time.after(1000, update_date_time)
+
+date_time = Label(okno, textvariable=date_time_var, font=("Helvetica", 16))
 date_time.pack(anchor="center")
 
-current_time = datetime.now()
-# przyda się do kalendarza
-# day = odczytaj przez .strftime('%d')
-# month = 
-# year = 
-
-# utwórz cal = Calendar(...
-# wstaw przez .pack poniżej zegara
+cal = Calendar(okno, selectmode='day')
+cal.pack(pady=20)
 
 update_date_time()
 
